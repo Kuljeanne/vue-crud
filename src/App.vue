@@ -1,13 +1,14 @@
 <template>
   <div class="app">
-    <CreateForm/>
-    <UserTable :users="users"/>
+    <CreateForm @create="addUser"/>
+    <UserTable :users="users" />
   </div>
 </template>
 
 <script lang="ts">
 import CreateForm from './components/CreateForm.vue'
 import UserTable from './components/UserTable.vue'
+import type { User } from './types'
 
 export default {
   components: {
@@ -15,26 +16,13 @@ export default {
   },
   data() {
     return {
-      users: [
-        { id: 1, name: 'Bill', surname: 'Doe' },
-        { id: 2, name: 'Kate', surname: 'Doe' },
-        { id: 3, name: 'John', surname: 'Doe' },
-      ],
-      userName: '',
-      userSurname: ''
+      users: [] as User[],
     }
   },
   methods: {
     getUsers() { },
-    addUser() {
-      const newUser = {
-        id: Date.now(),
-        name: this.userName,
-        surname: this.userSurname,
-      }
-      this.users.push(newUser)
-      this.userName = ''
-      this.userSurname = ''
+    addUser(user: User) {
+      this.users.push(user)
     },
     editUser() { },
     deleteUser() { }

@@ -2,27 +2,41 @@
   <form @submit.prevent sub class="form">
     <h1 class="title">Добавить пользователя в базу данных</h1>
     <div class="inputs">
-      <input v-bind:value="user.userName" @input="user.userName = ($event.target as HTMLInputElement).value" class="input"
-        type="text" placeholder="Имя">
-      <input v-bind:value="user.userSurname" @input="user.userSurname = ($event.target as HTMLInputElement).value" class="input"
-        type="text" placeholder="Фамилия">
-      <button class="btn">Добавить</button>
+      <input v-model="user.name" class="input" type="text" placeholder="Имя">
+      <input v-model="user.surname" class="input" type="text" placeholder="Фамилия">
+      <button class="btn" @click="addUser">
+        Добавить
+      </button>
     </div>
   </form>
 </template>
 
 <script lang="ts">
+import type { User } from '@/types'
+
+
 export default {
+
   data() {
     return {
       user: {
-        userName: '',
-        userSurname: ''
+        name: '',
+        surname: ''
+      } as User
+    }
+  },
+  methods: {
+    addUser() {
+      this.user.id = Date.now()
+      this.$emit('create', this.user)
+      this.user = {
+        name: '',
+        surname: ''
       }
+    }
+  }
 
-  }
 }
-  }
 </script>
 
 <style scoped>
@@ -65,4 +79,5 @@ export default {
 .btn:hover {
   background-color: #877ae4;
   transition: all .3s ease-in-out;
-}</style>
+}
+</style>

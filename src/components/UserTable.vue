@@ -24,20 +24,13 @@
 </template>
 
 <script setup lang="ts">
+import type { User } from "@/types";
 import IconDelete from "./icons/IconDelete.vue";
 import IconEdit from "./icons/IconEdit.vue";
 
-type User = {
-  id: number,
-  name: string,
-  surname: string
-}
+type ArrayOfUsers = { users: User[] }
 
-interface Users {
-  users: User[]
-}
-
-defineProps<Users>()
+defineProps<ArrayOfUsers>()
 
 </script>
 
