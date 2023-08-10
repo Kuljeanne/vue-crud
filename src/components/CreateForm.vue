@@ -5,7 +5,7 @@
       <input v-model="user.name" class="input" type="text" placeholder="Имя">
       <input v-model="user.surname" class="input" type="text" placeholder="Фамилия">
       <button class="btn" @click="addUser">
-        Добавить
+        Добавить в БД
       </button>
     </div>
   </form>
@@ -20,6 +20,7 @@ export default {
   data() {
     return {
       user: {
+        id: 0,
         name: '',
         surname: ''
       } as User
@@ -27,9 +28,9 @@ export default {
   },
   methods: {
     addUser() {
-      this.user.id = Date.now()
       this.$emit('create', this.user)
       this.user = {
+        id: 0,
         name: '',
         surname: ''
       }

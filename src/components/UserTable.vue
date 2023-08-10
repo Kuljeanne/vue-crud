@@ -6,15 +6,16 @@
       <th>Фамилия</th>
       <th></th>
     </tr>
-    <tr v-for="user in users" :key="user.id">
+    <tr v-if="users.length === 0"><td colspan="3">Список пользователей пуст, заполните форму выше</td></tr>
+    <tr v-else v-for="user in users" :key="user.id">
       <td>{{ user.name }}</td>
       <td>{{ user.surname }}</td>
       <td>
         <div class="edit-btns">
-          <button @click="editUser" class="table-btn">
+          <button @click="$emit('edit', user)" class="table-btn">
             <IconEdit />
           </button>
-          <button @click="deleteUser" class="btn table-btn">
+          <button @click="$emit('remove', user)" class="btn table-btn">
             <IconDelete />
           </button>
         </div>
