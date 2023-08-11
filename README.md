@@ -28,6 +28,8 @@ npm install
 
 ### Запуск сервера
 
+Необходимо запустить две команды:
+
 ```sh
 npm run dev
 npm run server
