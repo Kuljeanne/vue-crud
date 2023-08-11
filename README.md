@@ -1,46 +1,43 @@
 # vue-crud
 
-This template should help get you started developing with Vue 3 in Vite.
+Одностраничное приложение на Vue 3 in Vite с возможность добавлять, редактировать и удалять пользователей из базы данных.
 
-## Recommended IDE Setup
+## Requirments
+  - Nodejs/npm
+  - Postgresql
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Settings
 
-## Type Support for `.vue` Imports in TS
+Перед запуском сервера необходимо установить postgresql и обновить данные о базе данных в папке server/index.ts
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+В консоли psql запустить:
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
+```sh
+create TABLE users(
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255),
+  surname VARCHAR(255)
+)
+```
+## Инициализация проекта
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Запуск сервера
 
 ```sh
 npm run dev
+npm run server
 ```
 
-### Type-Check, Compile and Minify for Production
+фронт: http://localhost:5173/
+бэк: http://localhost:3000/
+
+### Сборка
 
 ```sh
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
