@@ -1,30 +1,41 @@
 <template>
   <div class="app">
-    <CreateForm @create="addUser" />
-    <UserTable :users="users" @edit="editUser" @remove="deleteUser" />
+    <EditModal v-model:is-shown="modalShown">
+      <h2>Редактировать данные пользователя</h2>
+      <FormInput v-model="editingUser.name" />
+      <FormInput v-model="editingUser.surname" />
+      <FormButton text="Сохранить изменения" @click="editUser" />
+    </EditModal>
+    <CreateForm @create="addUser" title="Добавить пользователя в базу данных " />
+    <UserTable :users="users" @edit="openEdit" @remove="deleteUser" />
   </div>
 </template>
 
 <script lang="ts">
 import CreateForm from './components/CreateForm.vue'
 import UserTable from './components/UserTable.vue'
+import EditModal from './components/EditModal.vue'
+import FormButton from './components/FormButton.vue'
+import FormInput from './components/FormInput.vue'
 import type { User } from './types'
 import axios from 'axios'
 
 export default {
   components: {
-    CreateForm, UserTable
+    CreateForm, UserTable, EditModal, FormButton, FormInput
   },
   data() {
     return {
       users: [] as User[],
+      modalShown: false,
+      editingUser: {} as User
     }
   },
   methods: {
     async getUsers() {
       try {
         const res = await axios.get('http://localhost:3000/api/user/all')
-        this.users = res.data
+        this.users = res.data.sort((a: User, b: User) => a.id - b.id)
       } catch (e) {
         console.log(e)
       }
@@ -40,7 +51,29 @@ export default {
         console.log(e)
       }
     },
-    editUser() { },
+    openEdit(user: User) {
+      this.modalShown = true
+      this.editingUser = { ...user }
+    },
+    async editUser() {
+      try {
+        const { id, name, surname } = this.editingUser
+        await axios.put(`http://localhost:3000/api/user`, {
+          id: id,
+          name: name,
+          surname: surname
+        })
+        const edited = this.users.find((edited) => edited.id === id)
+        if (edited) {
+          edited.name = name;
+          edited.surname = surname
+        }
+      } catch (e) {
+        console.log(e)
+      } finally {
+        this.modalShown = false
+      }
+    },
     async deleteUser(user: User) {
       try {
         await axios.delete(`http://localhost:3000/api/user/${user.id}`, { data: { id: user.id } })
@@ -64,5 +97,10 @@ export default {
   flex-direction: column;
   align-items: center;
   gap: 2rem;
+}
+
+h2 {
+  font-size: 2.4rem;
+  text-align: center;
 }
 </style>

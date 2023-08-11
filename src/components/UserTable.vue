@@ -6,8 +6,10 @@
       <th>Фамилия</th>
       <th></th>
     </tr>
-    <tr v-if="users.length === 0"><td colspan="3">Список пользователей пуст, заполните форму выше</td></tr>
-    <tr v-else v-for="user in users" :key="user.id">
+    <tr v-if="users.length === 0">
+      <td colspan="3">Список пользователей пуст, заполните форму выше</td>
+    </tr>
+    <tr v-else v-for="user  in users" :key="user.id">
       <td>{{ user.name }}</td>
       <td>{{ user.surname }}</td>
       <td>
@@ -24,14 +26,27 @@
   </table>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import type { User } from "@/types";
 import IconDelete from "./icons/IconDelete.vue";
 import IconEdit from "./icons/IconEdit.vue";
 
-type ArrayOfUsers = { users: User[] }
-
-defineProps<ArrayOfUsers>()
+export default {
+  components: {
+    IconDelete, IconEdit
+  },
+  data() {
+    return {
+      isEditing: true
+    }
+  },
+  props: {
+    users: {
+      type: Array<User>,
+      required: true
+    }
+  }
+}
 
 </script>
 

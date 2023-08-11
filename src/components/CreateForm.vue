@@ -1,22 +1,32 @@
 <template>
   <form @submit.prevent sub class="form">
-    <h1 class="title">Добавить пользователя в базу данных</h1>
+    <h1 class="title">{{ title }}</h1>
     <div class="inputs">
-      <input v-model="user.name" class="input" type="text" placeholder="Имя">
-      <input v-model="user.surname" class="input" type="text" placeholder="Фамилия">
-      <button class="btn" @click="addUser">
-        Добавить в БД
-      </button>
+      <FormInput v-model="user.name" type="text" placeholder="Имя"/>
+      <FormInput v-model="user.surname" type="text" placeholder="Фамилия"/>
+      <FormButton text="Добавить в БД" @click=" addUser " />
     </div>
   </form>
 </template>
 
 <script lang="ts">
 import type { User } from '@/types'
-
-
+import FormButton from './FormButton.vue'
+import FormInput from './FormInput.vue'
 export default {
-
+  components: {
+    FormButton, FormInput
+  },
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+    isEditing: {
+      type: Boolean,
+      default: false
+    },
+  },
   data() {
     return {
       user: {
@@ -51,34 +61,8 @@ export default {
   display: flex;
   gap: 1.5rem;
   width: 100%;
-}
+  flex-wrap: wrap;
+  justify-content: center;
 
-.input {
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid #000;
-  font-size: 2rem;
-  padding: 0.5rem;
-}
-
-.input:focus {
-  outline: none;
-}
-
-.btn {
-  cursor: pointer;
-  border: none;
-  box-sizing: border-box;
-  padding: 1rem 1.5rem;
-  border-radius: 2rem;
-  background-color: #a299ea;
-  ;
-  font-size: 2rem;
-  transition: all .3s ease-in-out;
-}
-
-.btn:hover {
-  background-color: #877ae4;
-  transition: all .3s ease-in-out;
 }
 </style>
