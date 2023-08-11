@@ -1,17 +1,18 @@
 # vue-crud
 
-Одностраничное приложение на Vue 3 in Vite с возможность добавлять, редактировать и удалять пользователей из базы данных.
+Одностраничное приложение на Vue 3 in Vite с возможностью добавлять, редактировать и удалять пользователей из базы данных.
+![image](https://github.com/Kuljeanne/vue-crud/assets/107869684/e0385b1d-6519-434d-a59f-912776c82dd9)
+
 
 ## Requirments
   - Nodejs/npm
   - Postgresql
 
-## Settings
+## Настройки
 
 Перед запуском сервера необходимо установить postgresql и обновить данные о базе данных в папке server/index.ts
 
 В консоли psql запустить:
-
 ```sh
 create TABLE users(
   id SERIAL PRIMARY KEY,
